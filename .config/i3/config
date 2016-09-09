@@ -219,7 +219,7 @@ bindsym XF86Search exec rofi -show run -lines 10 -eh 2 -width 100 -padding 480 -
 hide_edge_borders both
 
  # Wallpapers
-exec --no-startup-id feh --bg-center --no-fehbg ~/Bilder/Wallpaper/japan_honshu_island_2-wallpaper-3840x1080.jpg
+exec --no-startup-id feh --bg-center --no-fehbg $HOME/.config/i3/Wallpaper.jpg
 
 # Pulse Audio controls
 bindsym XF86AudioLowerVolume exec /usr/bin/pactl set-sink-volume @DEFAULT_SINK@ '-10%'
