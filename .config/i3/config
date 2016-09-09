@@ -157,11 +157,25 @@ bar {
 
 # Custom goes here
 
+# dual monitor
+#exec xrandr --output eDP1 --auto --right-of HDMI1
+
 # thin borders
 hide_edge_borders both
 
 # set wallpaper
 exec --no-startup-id feh --bg-center ~/Bilder/green_mile-wallpaper-1920x1200.jpg
+
+# Pulse Audio controls
+bindsym XF86AudioLowerVolume exec /usr/bin/pactl set-sink-volume @DEFAULT_SINK@ '-10%'
+bindsym XF86AudioRaiseVolume exec /usr/bin/pactl set-sink-volume @DEFAULT_SINK@ '+10%'
+bindsym XF86AudioMute exec /usr/bin/pactl set-sink-mute @DEFAULT_SINK@ toggle
+
+# Sreen brightness controls
+bindsym XF86MonBrightnessUp exec xbacklight -inc 20 # increase screen brightness
+bindsym XF86MonBrightnessDown exec xbacklight -dec 20 # decrease screen brightness
+
+bindsym XF86Display exec "arandr"
 
 # lock
 bindsym $mod+Shift+x exec i3lock --color 475263
