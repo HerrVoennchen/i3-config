@@ -6,4 +6,4 @@
 - git dconf-editor openvpn evolution evolution-ews easy-rsa rofi mc
 
 ### benötigte Programme aus dem AUR
-- google-chrome-beta sublime-text-dev teamviewer gitkraken
+- google-chrome sublime-text-dev teamviewer gitkraken
