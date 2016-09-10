@@ -1,8 +1,9 @@
 # i3-config
 
-## bei Neuinstallation von Ubuntu-Desktop
+## bei Neuinstallation von Manjaro-Desktop (die Community-Version mit vorinstalliertem i3)
 
-### benötigte Programme
-- i3 i3blocks i3lock i3status i3-wm mc nano feh lxappearance lxsession git gnome-commander google-chrome xbacklight xautolock arandr vim dconf-editor openvpn evolution evolution-ews easy-rsa compton compton-conf htop rofi
-- Es wird empfohlen, das Ubuntu Repository direkt von i3 einzubinden.
-- Google-Chrome muss über die Website bezogen werden
+### benötigte Programme aus dem repo
+- git dconf-editor openvpn evolution evolution-ews easy-rsa rofi
+
+### benötigte Programme aus dem AUR
+- google-chrome
