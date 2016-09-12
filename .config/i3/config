@@ -101,7 +101,7 @@ bindsym $mod+a focus parent
 #bindsym $mod+d focus child
 
 # switch to workspace
-bindsym $mod+1 workspace 1
+bindsym $mod+1 workspace 1; exec notify-send 'Workspace 1'
 bindsym $mod+2 workspace 2
 bindsym $mod+3 workspace 3
 bindsym $mod+4 workspace 4
@@ -202,7 +202,7 @@ bar {
 
 # lock
 #bindsym $mod+Shift+x exec i3lock --color 475263
-bindsym $mod+Shift+l exec "$HOME/.config/i3/lock/lock.sh $HOME/.config/i3/lock/lock.png"
+bindsym $mod+Shift+l exec $HOME/.config/i3/scripts/blurlock
 
 exec --no-startup-id xautolock -time 3 -locker '$HOME/.config/i3/lock/lock.sh $HOME/.config/i3/lock/lock.png' &
 
