@@ -215,7 +215,7 @@ bindsym XF86Search exec rofi -show run -lines 10 -eh 2 -width 100 -padding 480 -
 hide_edge_borders both
 
  # Wallpapers
-exec --no-startup-id feh --bg-center --no-fehbg $HOME/.config/i3/Wallpaper.jpg
+exec --no-startup-id feh --bg-center --no-fehbg $HOME/.config/i3/Wallpaper/Wallpaper.jpg
 
 # Pulse Audio controls
 bindsym XF86AudioLowerVolume exec /usr/bin/pactl set-sink-volume @DEFAULT_SINK@ '-10%'
