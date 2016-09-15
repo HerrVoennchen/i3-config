@@ -12,10 +12,14 @@
 set $mod Mod4
 
 # some gnome helpers
-exec --no-startup-id /usr/lib/policykit-1-gnome/polkit-gnome-authentication-agent-1
+#exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
+#exec --no-startup-id compton -f
+exec --no-startup-id nitrogen --restore; sleep 1; compton -b
 exec --no-startup-id nm-applet
+exec --no-startup-id clipit
+exec_always --no-startup-id $HOME/.config/i3/scripts/setcursor
 
-exec xrandr --output eDP1 --auto --right-of HDMI1
+exec xrandr --output eDP2 --auto --right-of HDMI1
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
@@ -75,10 +79,10 @@ bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
 
 # split in horizontal orientation
-bindsym $mod+h split h
+bindsym $mod+h split h; exec notify-send 'split horizontal'
 
 # split in vertical orientation
-bindsym $mod+v split v
+bindsym $mod+v split v; exec notify-send 'split vertical'
 
 # enter fullscreen mode for the focused container
 bindsym $mod+f fullscreen toggle
@@ -101,7 +105,7 @@ bindsym $mod+a focus parent
 #bindsym $mod+d focus child
 
 # switch to workspace
-bindsym $mod+1 workspace 1; exec notify-send 'Workspace 1'
+bindsym $mod+1 workspace 1
 bindsym $mod+2 workspace 2
 bindsym $mod+3 workspace 3
 bindsym $mod+4 workspace 4
@@ -151,11 +155,11 @@ mode "resize" {
         bindsym Right resize grow width 10 px or 10 ppt
 
         # back to normal: Enter or Escape
-        bindsym Return mode "default"
-        bindsym Escape mode "default"
+        bindsym Return mode "default"; exec notify-send 'Normal mode'
+        bindsym Escape mode "default"; exec notify-send 'Normal mode'
 }
 
-bindsym $mod+r mode "resize"
+bindsym $mod+r mode "resize"; exec notify-send 'Resize mode'
 
 # Custom goes here
 
@@ -200,11 +204,28 @@ bar {
         }
 }
 
+# Set shut down, restart and locking features
+#bindsym $mod+0 mode "$mode_system"
+set $mode_system (l)ock, (e)xit, switch_(u)ser, (s)uspend, (h)ibernate, (r)eboot, (Shift+s)hutdown
+mode "$mode_system" {
+    bindsym l exec --no-startup-id i3exit lock, mode "default"
+    bindsym s exec --no-startup-id i3exit suspend, mode "default"
+    bindsym u exec --no-startup-id i3exit switch_user, mode "default"
+    bindsym e exec --no-startup-id i3exit logout, mode "default"
+    bindsym h exec --no-startup-id i3exit hibernate, mode "default"
+    bindsym r exec --no-startup-id i3exit reboot, mode "default"
+    bindsym Shift+s exec --no-startup-id i3exit shutdown, mode "default"
+
+    # exit system mode: "Enter" or "Escape"
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+
 # lock
 #bindsym $mod+Shift+x exec i3lock --color 475263
 bindsym $mod+Shift+l exec $HOME/.config/i3/scripts/blurlock
 
-exec --no-startup-id xautolock -time 3 -locker '$HOME/.config/i3/lock/lock.sh $HOME/.config/i3/lock/lock.png' &
+exec --no-startup-id xautolock -time 3 -locker '$HOME/.config/i3/scripts/blurlock' &
 
 # ROFI
 bindsym $mod+d exec rofi -show run -lines 10 -eh 2 -width 100 -padding 480 -opacity "85" -bw 0 -bc "$bg-color" -bg "$bg-color" -fg "$text-color" -hlbg "$bg-color" -hlfg "#9575cd" -font "System San Francisco Display 18"
@@ -214,17 +235,14 @@ bindsym XF86Search exec rofi -show run -lines 10 -eh 2 -width 100 -padding 480 -
 # thin borders
 hide_edge_borders both
 
- # Wallpapers
-exec --no-startup-id feh --bg-center --no-fehbg $HOME/.config/i3/Wallpaper/Wallpaper.jpg
-
 # Pulse Audio controls
 bindsym XF86AudioLowerVolume exec /usr/bin/pactl set-sink-volume @DEFAULT_SINK@ '-10%'
 bindsym XF86AudioRaiseVolume exec /usr/bin/pactl set-sink-volume @DEFAULT_SINK@ '+10%'
 bindsym XF86AudioMute exec /usr/bin/pactl set-sink-mute @DEFAULT_SINK@ toggle
 
 # Sreen brightness controls
-bindsym XF86MonBrightnessUp exec xbacklight -inc 20 # increase screen brightness
-bindsym XF86MonBrightnessDown exec xbacklight -dec 20 # decrease screen brightness
+bindsym XF86MonBrightnessUp exec xbacklight -inc 20; notify-send 'brightness up'" # increase screen brightness
+bindsym XF86MonBrightnessDown exec xbacklight -dec 20; notify-send 'brightness down'" # decrease screen brightness
 
 bindsym XF86Display exec "arandr"
 
@@ -239,7 +257,13 @@ client.focused_inactive $base02 $base02    $base03 $base0F
 client.unfocused        $base02 $base02    $base03 $base0F
 client.urgent           $base02 $base08    $base00 $base0F
 
-exec --no-startup-id compton -f
-
 bindsym --release Caps_Lock exec pkill -SIGRTMIN+11 i3blocks
 bindsym --release Num_Lock  exec pkill -SIGRTMIN+11 i3blocks
+
+for_window [title="Nachricht verfassen"] floating enable
+for_window [title="*AW:*"] floating enable
+for_window [title="*Re:*"] floating enable
+for_window [class="Lxappearance"] floating enable sticky enable border normal
+for_window [class="Nitrogen"] floating enable sticky enable border normal
+for_window [class="Clipgrab"] floating enable
+for_window [class="update-manager"] floating enable
