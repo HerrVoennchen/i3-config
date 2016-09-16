@@ -189,7 +189,8 @@ set $urgent-bg-color     #E53935
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
-        status_command i3blocks -c $HOME/.config/i3/i3blocks.conf
+        #status_command i3blocks -c $HOME/.config/i3/i3blocks.conf
+	status_command i3status -c $HOME/.config/i3/i3status.conf
         tray_output primary
 	#position top
 	colors {
@@ -236,13 +237,13 @@ bindsym XF86Search exec rofi -show run -lines 10 -eh 2 -width 100 -padding 480 -
 hide_edge_borders both
 
 # Pulse Audio controls
-bindsym XF86AudioLowerVolume exec /usr/bin/pactl set-sink-volume @DEFAULT_SINK@ '-10%'
-bindsym XF86AudioRaiseVolume exec /usr/bin/pactl set-sink-volume @DEFAULT_SINK@ '+10%'
-bindsym XF86AudioMute exec /usr/bin/pactl set-sink-mute @DEFAULT_SINK@ toggle
+bindsym XF86AudioLowerVolume exec /usr/bin/pactl set-sink-volume @DEFAULT_SINK@ '-10%'; exec pkill -SIGRTMIN+10 i3blocks
+bindsym XF86AudioRaiseVolume exec /usr/bin/pactl set-sink-volume @DEFAULT_SINK@ '+10%'; exec pkill -SIGRTMIN+10 i3blocks
+bindsym XF86AudioMute exec /usr/bin/pactl set-sink-mute @DEFAULT_SINK@ toggle; exec pkill -SIGRTMIN+10 i3blocks
 
 # Sreen brightness controls
-bindsym XF86MonBrightnessUp exec xbacklight -inc 20; notify-send 'brightness up'" # increase screen brightness
-bindsym XF86MonBrightnessDown exec xbacklight -dec 20; notify-send 'brightness down'" # decrease screen brightness
+bindsym XF86MonBrightnessUp exec xbacklight -inc 20; exec "notify-send 'brightness up'"
+bindsym XF86MonBrightnessDown exec xbacklight -dec 20; exec "notify-send 'brightness down'"
 
 bindsym XF86Display exec "arandr"
 
@@ -262,7 +263,10 @@ bindsym --release Num_Lock  exec pkill -SIGRTMIN+11 i3blocks
 
 for_window [title="Nachricht verfassen"] floating enable
 for_window [title="*AW:*"] floating enable
-for_window [title="*Re:*"] floating enable
+for_window [title="Re:*"] floating enable
+for_window [title="[Fwd:*"] floating enable
+for_window [title="*WG:*"] floating enable
+for_window [title="Re:*"] floating enable
 for_window [class="Lxappearance"] floating enable sticky enable border normal
 for_window [class="Nitrogen"] floating enable sticky enable border normal
 for_window [class="Clipgrab"] floating enable
