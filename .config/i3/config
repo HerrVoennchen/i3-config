@@ -16,6 +16,7 @@ set $mod Mod4
 #exec --no-startup-id compton -f
 exec --no-startup-id nitrogen --restore; sleep 1; compton -b
 exec --no-startup-id nm-applet
+exec --no-startup-id pa-applet
 exec --no-startup-id clipit
 exec_always --no-startup-id $HOME/.config/i3/scripts/setcursor
 
@@ -23,7 +24,8 @@ exec xrandr --output eDP2 --auto --right-of HDMI1
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
-font pango:System San Francisco Display Regular 12
+#font pango:System San Francisco Display Regular 12
+font pango:Ubuntu Light 13
 
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
@@ -88,9 +90,9 @@ bindsym $mod+v split v; exec notify-send 'split vertical'
 bindsym $mod+f fullscreen toggle
 
 # change container layout (stacked, tabbed, toggle split)
-bindsym $mod+s layout stacking
-bindsym $mod+w layout tabbed
-bindsym $mod+e layout toggle split
+bindsym $mod+s layout stacking; exec notify-send 'Stacked mode'
+bindsym $mod+w layout tabbed; exec notify-send 'Tabbed mode'
+bindsym $mod+e layout toggle split; exec notify-send 'Split mode'
 
 # toggle tiling / floating
 bindsym $mod+Shift+space floating toggle
@@ -218,23 +220,6 @@ bar {
         }
 }
 
-# Set shut down, restart and locking features
-#bindsym $mod+0 mode "$mode_system"
-set $mode_system (l)ock, (e)xit, switch_(u)ser, (s)uspend, (h)ibernate, (r)eboot, (Shift+s)hutdown
-mode "$mode_system" {
-    bindsym l exec --no-startup-id i3exit lock, mode "default"
-    bindsym s exec --no-startup-id i3exit suspend, mode "default"
-    bindsym u exec --no-startup-id i3exit switch_user, mode "default"
-    bindsym e exec --no-startup-id i3exit logout, mode "default"
-    bindsym h exec --no-startup-id i3exit hibernate, mode "default"
-    bindsym r exec --no-startup-id i3exit reboot, mode "default"
-    bindsym Shift+s exec --no-startup-id i3exit shutdown, mode "default"
-
-    # exit system mode: "Enter" or "Escape"
-    bindsym Return mode "default"
-    bindsym Escape mode "default"
-}
-
 # lock
 #bindsym $mod+Shift+x exec i3lock --color 475263
 bindsym $mod+Shift+l exec --no-startup-id $HOME/.config/i3/scripts/blurlock
@@ -250,9 +235,9 @@ bindsym XF86Search exec rofi -show run -lines 10 -eh 2 -width 100 -padding 480 -
 hide_edge_borders both
 
 # Pulse Audio controls
-bindsym XF86AudioLowerVolume exec /usr/bin/pactl set-sink-volume @DEFAULT_SINK@ '-10%'; exec pkill -SIGRTMIN+10 i3status
-bindsym XF86AudioRaiseVolume exec /usr/bin/pactl set-sink-volume @DEFAULT_SINK@ '+10%'; exec pkill -SIGRTMIN+10 i3status
-bindsym XF86AudioMute exec /usr/bin/pactl set-sink-mute @DEFAULT_SINK@ toggle; exec pkill -SIGRTMIN+10 i3status
+bindsym XF86AudioLowerVolume exec /usr/bin/pactl set-sink-volume @DEFAULT_SINK@ '-10%'
+bindsym XF86AudioRaiseVolume exec /usr/bin/pactl set-sink-volume @DEFAULT_SINK@ '+10%'
+bindsym XF86AudioMute exec /usr/bin/pactl set-sink-mute @DEFAULT_SINK@ toggle
 
 # Sreen brightness controls
 bindsym XF86MonBrightnessUp exec xbacklight -inc 20; exec "notify-send 'brightness up'"
@@ -271,8 +256,8 @@ client.focused_inactive $base02 $base02    $base03 $base0F
 client.unfocused        $base02 $base02    $base03 $base0F
 client.urgent           $base02 $base08    $base00 $base0F
 
-bindsym --release Caps_Lock exec pkill -SIGRTMIN+11 i3status
-bindsym --release Num_Lock  exec pkill -SIGRTMIN+11 i3status
+#bindsym --release Caps_Lock exec pkill -SIGRTMIN+11 i3status
+#bindsym --release Num_Lock  exec pkill -SIGRTMIN+11 i3status
 
 
 # Set shut down, restart and locking features
@@ -280,12 +265,12 @@ bindsym $mod+Escape mode "$mode_system"
 set $mode_system (l)ock, (e)xit, switch_(u)ser, (s)uspend, (h)ibernate, (r)eboot, (Shift+s)hutdown
 mode "$mode_system" {
     bindsym l exec --no-startup-id $HOME/.config/i3/scripts/blurlock, mode "default"
-    bindsym s exec --no-startup-id i3exit suspend, mode "default"
-    bindsym u exec --no-startup-id i3exit switch_user, mode "default"
-    bindsym e exec --no-startup-id i3exit logout, mode "default"
-    bindsym h exec --no-startup-id i3exit hibernate, mode "default"
-    bindsym r exec --no-startup-id i3exit reboot, mode "default"
-    bindsym Shift+s exec --no-startup-id i3exit shutdown, mode "default"
+    bindsym s exec --no-startup-id $HOME/.config/i3/scripts/i3exit suspend, mode "default"
+    bindsym u exec --no-startup-id $HOME/.config/i3/scripts/i3exit switch_user, mode "default"
+    bindsym e exec --no-startup-id $HOME/.config/i3/scripts/i3exit logout, mode "default"
+    bindsym h exec --no-startup-id $HOME/.config/i3/scripts/i3exit hibernate, mode "default"
+    bindsym r exec --no-startup-id $HOME/.config/i3/scripts/i3exit reboot, mode "default"
+    bindsym Shift+s exec --no-startup-id $HOME/.config/i3/scripts/i3exit shutdown, mode "default"
 
     # exit system mode: "Enter" or "Escape"
     bindsym Return mode "default"
@@ -294,10 +279,8 @@ mode "$mode_system" {
 
 for_window [title="Nachricht verfassen"] floating enable
 for_window [title="*AW:*"] floating enable
-for_window [title="Re:*"] floating enable
 for_window [title="[Fwd:*"] floating enable
 for_window [title="*WG:*"] floating enable
-for_window [title="Re:*"] floating enable
 for_window [class="Lxappearance"] floating enable sticky enable border normal
 for_window [class="Nitrogen"] floating enable sticky enable border normal
 for_window [class="Clipgrab"] floating enable
