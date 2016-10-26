@@ -116,6 +116,18 @@ bindsym $mod+8 workspace 8
 bindsym $mod+9 workspace 9
 bindsym $mod+0 workspace 10
 
+bindsym $mod+Mod1+1 workspace 11
+bindsym $mod+Mod1+2 workspace 12
+bindsym $mod+Mod1+3 workspace 13
+bindsym $mod+Mod1+4 workspace 14
+bindsym $mod+Mod1+5 workspace 15
+bindsym $mod+Mod1+6 workspace 16
+bindsym $mod+Mod1+7 workspace 17
+bindsym $mod+Mod1+8 workspace 18
+bindsym $mod+Mod1+9 workspace 19
+bindsym $mod+Mod1+0 workspace 20
+
+
 # move focused container to workspace
 bindsym $mod+Shift+1 move container to workspace 1
 bindsym $mod+Shift+2 move container to workspace 2
@@ -162,6 +174,7 @@ mode "resize" {
 bindsym $mod+r mode "resize"; exec notify-send 'Resize mode'
 
 # Custom goes here
+
 
 set $base00 #101218
 set $base01 #1f222d
@@ -224,7 +237,7 @@ mode "$mode_system" {
 
 # lock
 #bindsym $mod+Shift+x exec i3lock --color 475263
-bindsym $mod+Shift+l exec $HOME/.config/i3/scripts/blurlock
+bindsym $mod+Shift+l exec --no-startup-id $HOME/.config/i3/scripts/blurlock
 
 exec --no-startup-id xautolock -time 3 -locker '$HOME/.config/i3/scripts/blurlock' &
 
@@ -237,9 +250,9 @@ bindsym XF86Search exec rofi -show run -lines 10 -eh 2 -width 100 -padding 480 -
 hide_edge_borders both
 
 # Pulse Audio controls
-bindsym XF86AudioLowerVolume exec /usr/bin/pactl set-sink-volume @DEFAULT_SINK@ '-10%'; exec pkill -SIGRTMIN+10 i3blocks
-bindsym XF86AudioRaiseVolume exec /usr/bin/pactl set-sink-volume @DEFAULT_SINK@ '+10%'; exec pkill -SIGRTMIN+10 i3blocks
-bindsym XF86AudioMute exec /usr/bin/pactl set-sink-mute @DEFAULT_SINK@ toggle; exec pkill -SIGRTMIN+10 i3blocks
+bindsym XF86AudioLowerVolume exec /usr/bin/pactl set-sink-volume @DEFAULT_SINK@ '-10%'; exec pkill -SIGRTMIN+10 i3status
+bindsym XF86AudioRaiseVolume exec /usr/bin/pactl set-sink-volume @DEFAULT_SINK@ '+10%'; exec pkill -SIGRTMIN+10 i3status
+bindsym XF86AudioMute exec /usr/bin/pactl set-sink-mute @DEFAULT_SINK@ toggle; exec pkill -SIGRTMIN+10 i3status
 
 # Sreen brightness controls
 bindsym XF86MonBrightnessUp exec xbacklight -inc 20; exec "notify-send 'brightness up'"
@@ -258,8 +271,26 @@ client.focused_inactive $base02 $base02    $base03 $base0F
 client.unfocused        $base02 $base02    $base03 $base0F
 client.urgent           $base02 $base08    $base00 $base0F
 
-bindsym --release Caps_Lock exec pkill -SIGRTMIN+11 i3blocks
-bindsym --release Num_Lock  exec pkill -SIGRTMIN+11 i3blocks
+bindsym --release Caps_Lock exec pkill -SIGRTMIN+11 i3status
+bindsym --release Num_Lock  exec pkill -SIGRTMIN+11 i3status
+
+
+# Set shut down, restart and locking features
+bindsym $mod+Escape mode "$mode_system"
+set $mode_system (l)ock, (e)xit, switch_(u)ser, (s)uspend, (h)ibernate, (r)eboot, (Shift+s)hutdown
+mode "$mode_system" {
+    bindsym l exec --no-startup-id $HOME/.config/i3/scripts/blurlock, mode "default"
+    bindsym s exec --no-startup-id i3exit suspend, mode "default"
+    bindsym u exec --no-startup-id i3exit switch_user, mode "default"
+    bindsym e exec --no-startup-id i3exit logout, mode "default"
+    bindsym h exec --no-startup-id i3exit hibernate, mode "default"
+    bindsym r exec --no-startup-id i3exit reboot, mode "default"
+    bindsym Shift+s exec --no-startup-id i3exit shutdown, mode "default"
+
+    # exit system mode: "Enter" or "Escape"
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
 
 for_window [title="Nachricht verfassen"] floating enable
 for_window [title="*AW:*"] floating enable
@@ -271,3 +302,4 @@ for_window [class="Lxappearance"] floating enable sticky enable border normal
 for_window [class="Nitrogen"] floating enable sticky enable border normal
 for_window [class="Clipgrab"] floating enable
 for_window [class="update-manager"] floating enable
+for_window [class="google-chrome"] floating disable
