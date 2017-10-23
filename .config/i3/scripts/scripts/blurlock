@@ -1,0 +1,6 @@
+#!/bin/bash
+scrot /tmp/screenshot.png
+#convert /tmp/screenshot.png -blur 0x10 /tmp/screenshot.png
+convert /tmp/screenshot.png -scale 10% -scale 1000% -fill black -colorize 30% /tmp/screenshot.png
+i3lock -i /tmp/screenshot.png
+rm /tmp/screenshot.png

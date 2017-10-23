@@ -7,3 +7,20 @@
 - Es wird empfohlen, das Ubuntu Repository direkt von i3 einzubinden.
 - Google-Chrome muss über die Website bezogen werden
 
+VSCode Erweiterungen
+
+- Auto Close Tag
+- Babel ES6/ES7
+- Bimbo Theme
+- Bracket Pair Colorizer
+- Color Picker
+- Dracula theme
+- ES7 React/Redux..
+- Material Theme/Material Theme Kit
+- Nova
+- Output Colorizer
+- Path Intellisense
+- Prettier
+- Vetur
+- vue
+- webpack
