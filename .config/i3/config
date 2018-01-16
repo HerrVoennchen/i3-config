@@ -18,17 +18,46 @@ exec --no-startup-id nitrogen --restore; sleep 1; compton -b
 exec --no-startup-id nm-applet
 exec --no-startup-id pa-applet
 exec --no-startup-id clipit
+exec --no-startup-id blueman-applet
 exec_always --no-startup-id $HOME/.config/i3/scripts/setcursor
 
+exec --no-startup-id /usr/lib/gnome-settings-daemon/gsd-a11y-keyboard
+exec --no-startup-id /usr/lib/gnome-settings-daemon/gsd-a11y-settings
+exec --no-startup-id /usr/lib/gnome-settings-daemon/gsd-clipboard
+exec --no-startup-id /usr/lib/gnome-settings-daemon/gsd-color
+exec --no-startup-id /usr/lib/gnome-settings-daemon/gsd-datetime
+exec --no-startup-id /usr/lib/gnome-settings-daemon/gsd-xsettings
+exec --no-startup-id /usr/lib/gnome-settings-daemon/gsd-media-keys
+exec --no-startup-id /usr/lib/gnome-settings-daemon/gsd-mouse
+exec --no-startup-id /usr/lib/gnome-settings-daemon/gsd-backlight-helper
+exec --no-startup-id /usr/lib/gnome-settings-daemon/gsd-keyboard
+exec --no-startup-id /usr/lib/gnome-settings-daemon/gsd-power
+exec --no-startup-id /usr/lib/gnome-settings-daemon/gsd-housekeeping
+exec --no-startup-id /usr/lib/gnome-settings-daemon/gsd-printer
+exec --no-startup-id /usr/lib/gnome-settings-daemon/gsd-rfkill
+exec --no-startup-id /usr/lib/gnome-settings-daemon/gsd-locate-pointer
+exec --no-startup-id /usr/lib/gnome-settings-daemon/gsd-print-notifications
+exec --no-startup-id /usr/lib/gnome-settings-daemon/gsd-screensaver-proxy
+exec --no-startup-id /usr/lib/gnome-settings-daemon/gsd-sharing
+exec --no-startup-id /usr/lib/gnome-settings-daemon/gsd-smartcard
+exec --no-startup-id /usr/lib/gnome-settings-daemon/gsd-sound
+exec --no-startup-id /usr/lib/gnome-settings-daemon/gsd-test-input-helper
+exec --no-startup-id /usr/lib/gnome-settings-daemon/gsd-wacom
+exec --no-startup-id /usr/lib/gnome-settings-daemon/gsd-wacom-led-helper
+exec --no-startup-id /usr/lib/gnome-settings-daemon/gsd-wacom-oled-helper
+
 #exec xrandr --output eDP2 --auto --right-of HDMI1
-exec xrandr --output DVI-D-1-1 --off --output VIRTUAL1 --off --output eDP2 --primary --mode 1920x1080 --pos 3840x0 --rotate normal --output DP1 --off --output DP2 --off --output eDP-1-1 --off --output HDMI2 --off --output HDMI1 --mode 1920x1080 --pos 1920x0 --rotate normal --output VGA1 --mode 1920x1080 --pos 0x0 --rotate normal
+#exec xrandr --output DVI-D-1-1 --off --output VIRTUAL1 --off --output eDP2 --primary --mode 1920x1080 --pos 3840x0 --rotate normal --output DP1 --off --output DP2 --off --output eDP-1-1 --off --output HDMI2 --off --output HDMI1 --mode 1920x1080 --pos 1920x0 --rotate normal --output VGA1 --mode 1920x1080 --pos 0x0 --rotate normal
+exec xrandr --output VGA-1 --mode 1920x1080 --pos 0x0 --rotate normal --output DVI-D-1-1 --off --output eDP-1 --mode 1920x1080 --pos 3840x0 --rotate normal --output eDP-1-2 --off --output HDMI-2 --off --output HDMI-1 --mode 1920x1080 --pos 1920x0 --rotate normal --output DP-2 --off --output DP-1 --off
+
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
 #font pango:System San Francisco Display Regular 10
 #font pango:Ubuntu Light 13
-#font pango:Input Mono 11
-font pango:Operator Mono Medium 13
+#font pango:Input Mono Medium 11
+font pango:SF Mono 12
+#font pango:Open Sans 12
 
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
@@ -216,12 +245,14 @@ set $text-color          #f3f4f5
 set $inactive-text-color #676E7D
 set $urgent-bg-color     #E53935
 
+set $bg-color-alpha	#AA2f343f
+
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
         #status_command i3blocks -c $HOME/.config/i3/i3blocks.conf
 	status_command i3status -c $HOME/.config/i3/i3status.conf
-        tray_output primary
+#        tray_output primary
 	position top
 	colors {
                 separator $base03
@@ -242,9 +273,10 @@ bindsym $mod+Shift+l exec --no-startup-id $HOME/.config/i3/scripts/blurlock
 exec --no-startup-id xautolock -time 15 -locker '$HOME/.config/i3/scripts/blurlock' &
 
 # ROFI
-bindsym $mod+d exec rofi -show run -lines 10 -eh 2 -width 100 -padding 300 -opacity "85" -bw 0 -bc "$bg-color" -bg "$bg-color" -fg "$text-color" -hlbg "$bg-color" -hlfg "#9575cd" -font "System San Francisco Display 18"
+set $app_starter exec rofi -show run -fullscreen -padding 200 -lines 10 -eh 2 -font "SF Mono Regular 18"
 
-bindsym XF86Search exec rofi -show run -lines 10 -eh 2 -width 100 -padding 300 -opacity "85" -bw 0 -bc "$bg-color" -bg "$bg-color" -fg "$text-color" -hlbg "$bg-color" -hlfg "#9575cd" -font "System San Francisco
+bindsym $mod+d $app_starter
+bindsym XF86Search $app_starter
 
 # thin borders
 hide_edge_borders both
