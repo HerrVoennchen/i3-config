@@ -3,7 +3,8 @@
 ## bei Neuinstallation von Ubuntu-Desktop
 
 ### benötigte Programme
-- i3 i3lock i3status i3-wm mc nano feh lxappearance lxsession git xbacklight xautolock arandr dconf-editor openvpn evolution evolution-ews easy-rsa compton compton-conf htop rofi zsh nitrogen resolvconf
+- i3 i3lock i3status i3-wm mc nano feh git xbacklight xautolock arandr dconf-editor openvpn evolution evolution-ews easy-rsa compton compton-conf htop rofi zsh nitrogen resolvconf ubuntu-restricted-addons ubuntu-restricted-extras exfat-fuse exfat-utils ntfs-3g 
+
 - Es wird empfohlen, das Ubuntu Repository direkt von i3 einzubinden.
 - Google-Chrome muss über die Website bezogen werden
 
